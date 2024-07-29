@@ -1,0 +1,51 @@
+local player = game.Players.LocalPlayer
+local GUI = Instance.new("ScreenGui")
+local Button = Instance.new("TextButton")
+local AnimationID = "rbxassetid://17344821842"
+local AnimationRunning = false
+
+Button.Parent = GUI
+Button.Size = UDim2.new(0, 100, 0, 100)
+Button.Position = UDim2.new(0.7, 0,0.5, 0)
+Button.BackgroundColor3 = Color3.new(0.247059, 0.772549, 0.0862745)
+Button.BackgroundTransparency = 0.5
+Button.Text = "Expand Your Domain"
+
+GUI.Parent = player:WaitForChild("PlayerGui")
+GUI.Name = "AnimationGUI"
+
+Button.MouseButton1Click:Connect(function()
+	if not AnimationRunning then
+		AnimationRunning = true
+		Button.Text = "Wait..."
+		Button.BackgroundColor3 = Color3.new(1, 0, 0.0156863)
+		local Character = player.Character
+		if Character then
+			local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+			if Humanoid then
+				local Animator = Humanoid:FindFirstChildOfClass("Animator")
+				if Animator then
+					local Animation = Instance.new("Animation")
+					Animation.AnimationId = AnimationID
+					local AnimationTrack = Animator:LoadAnimation(Animation)
+					AnimationTrack:Play()
+					
+					-- sounds
+					local sound = Instance.new("Sound")
+					sound.Parent = Character
+					sound.SoundId = "rbxassetid://18711094336"
+					sound:Play()
+					
+					local length = AnimationTrack.Length - 0.1
+					wait(length)
+					AnimationTrack:AdjustSpeed(-1.2)
+					wait(length / 2 + 0.3)
+					AnimationTrack:Stop()
+				end
+			end
+		end
+		Button.Text = "Expand Your Domain"
+		Button.BackgroundColor3 = Color3.new(0.247059, 0.772549, 0.0862745)
+		AnimationRunning = false
+	end
+end)

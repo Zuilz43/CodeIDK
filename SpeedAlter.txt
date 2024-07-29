@@ -1,6 +1,0 @@
-local Player = game.Players.LocalPlayer
-
-if Player.CharacterAdded then
-	local humanoid = Player:WaitForChild("Humanoid")
-	humanoid.WalkSpeed = 50
-end
